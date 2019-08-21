@@ -152,9 +152,9 @@ func (l *List) PutListIDRemoveBabyNameHandlerFunc(params operations.PutListIDRem
 	return operations.NewPutListIDRemoveBabyNameOK().WithPayload(&successPayload)
 }
 
-func IsLetter(s string) bool {
+func IsLetterOrSpace(s string) bool {
 	for _, r := range s {
-		if !unicode.IsLetter(r) {
+		if !unicode.IsLetter(r) && !unicode.IsSpace(r) {
 			return false
 		}
 	}
@@ -162,7 +162,7 @@ func IsLetter(s string) bool {
 }
 
 func validateName(name string) error {
-	if !IsLetter(name) {
+	if !IsLetterOrSpace(name) {
 		return errors.New("Name contains not letter characters")
 	}
 
