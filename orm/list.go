@@ -43,7 +43,9 @@ func (l *ListORM) Update(list *List) (*List, error) {
 }
 
 func (l *ListORM) Read(id string) (*List, error) {
-	list := List{}
+	list := List{
+		ID: id,
+	}
 
-	return &list, l.DB.Where(id).Find(&list).Error
+	return &list, l.DB.Where(&list).Find(&list).Error
 }
