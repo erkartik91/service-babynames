@@ -84,7 +84,7 @@ paths:
         type: string
         in: path
         required: true
-      - name: babyNames
+      - name: babyName
         type: string
         in: query
         required: true
@@ -107,7 +107,7 @@ paths:
         type: string
         in: path
         required: true
-      - name: babyNames
+      - name: babyName
         type: string
         in: query
         required: true

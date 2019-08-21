@@ -36,7 +36,7 @@ type PutListIDRemoveBabyNameParams struct {
 	  Required: true
 	  In: query
 	*/
-	BabyNames string
+	BabyName string
 	/*
 	  Required: true
 	  In: path
@@ -55,8 +55,8 @@ func (o *PutListIDRemoveBabyNameParams) BindRequest(r *http.Request, route *midd
 
 	qs := runtime.Values(r.URL.Query())
 
-	qBabyNames, qhkBabyNames, _ := qs.GetOK("babyNames")
-	if err := o.bindBabyNames(qBabyNames, qhkBabyNames, route.Formats); err != nil {
+	qBabyName, qhkBabyName, _ := qs.GetOK("babyName")
+	if err := o.bindBabyName(qBabyName, qhkBabyName, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -71,10 +71,10 @@ func (o *PutListIDRemoveBabyNameParams) BindRequest(r *http.Request, route *midd
 	return nil
 }
 
-// bindBabyNames binds and validates parameter BabyNames from query.
-func (o *PutListIDRemoveBabyNameParams) bindBabyNames(rawData []string, hasKey bool, formats strfmt.Registry) error {
+// bindBabyName binds and validates parameter BabyName from query.
+func (o *PutListIDRemoveBabyNameParams) bindBabyName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	if !hasKey {
-		return errors.Required("babyNames", "query")
+		return errors.Required("babyName", "query")
 	}
 	var raw string
 	if len(rawData) > 0 {
@@ -83,11 +83,11 @@ func (o *PutListIDRemoveBabyNameParams) bindBabyNames(rawData []string, hasKey b
 
 	// Required: true
 	// AllowEmptyValue: false
-	if err := validate.RequiredString("babyNames", "query", raw); err != nil {
+	if err := validate.RequiredString("babyName", "query", raw); err != nil {
 		return err
 	}
 
-	o.BabyNames = raw
+	o.BabyName = raw
 
 	return nil
 }

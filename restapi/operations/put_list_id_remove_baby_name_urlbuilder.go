@@ -16,7 +16,7 @@ import (
 type PutListIDRemoveBabyNameURL struct {
 	ID string
 
-	BabyNames string
+	BabyName string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -59,9 +59,9 @@ func (o *PutListIDRemoveBabyNameURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	babyNames := o.BabyNames
-	if babyNames != "" {
-		qs.Set("babyNames", babyNames)
+	babyName := o.BabyName
+	if babyName != "" {
+		qs.Set("babyName", babyName)
 	}
 
 	_result.RawQuery = qs.Encode()

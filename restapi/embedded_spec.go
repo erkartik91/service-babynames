@@ -100,7 +100,7 @@ func init() {
           },
           {
             "type": "string",
-            "name": "babyNames",
+            "name": "babyName",
             "in": "query",
             "required": true
           }
@@ -133,7 +133,7 @@ func init() {
           },
           {
             "type": "string",
-            "name": "babyNames",
+            "name": "babyName",
             "in": "query",
             "required": true
           }
@@ -278,7 +278,7 @@ func init() {
           },
           {
             "type": "string",
-            "name": "babyNames",
+            "name": "babyName",
             "in": "query",
             "required": true
           }
@@ -311,7 +311,7 @@ func init() {
           },
           {
             "type": "string",
-            "name": "babyNames",
+            "name": "babyName",
             "in": "query",
             "required": true
           }

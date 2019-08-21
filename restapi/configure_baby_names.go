@@ -5,15 +5,20 @@ package restapi
 import (
 	"crypto/tls"
 	"net/http"
+	"os"
 
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/jinzhu/gorm"
 
+	"github.com/erkartik91/service-babynames/controllers"
+	"github.com/erkartik91/service-babynames/orm"
 	"github.com/erkartik91/service-babynames/restapi/operations"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/mattn/go-sqlite3"
 )
 
-//go:generate swagger generate server --target ../../service-babynames --name BabyNames --spec ../swagger/definition.yaml --exclude-main
+//go:generate swagger generate server --target ../../service-babynames --name BabyNames --spec ../swagger/definition.yaml
 
 func configureFlags(api *operations.BabyNamesAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -22,6 +27,22 @@ func configureFlags(api *operations.BabyNamesAPI) {
 func configureAPI(api *operations.BabyNamesAPI) http.Handler {
 	// configure the api here
 	api.ServeError = errors.ServeError
+
+	var db *gorm.DB
+	var err error
+	db, err = gorm.Open("postgres", os.Getenv("DATABASE_URL"))
+	// /	db, err = gorm.Open("sqlite3", ":memory:")
+	if err != nil {
+		panic(err.Error())
+	}
+	if db == nil {
+		panic("unsupported database type")
+	}
+	o := orm.New(db)
+
+	listController := controllers.List{
+		ORM: o,
+	}
 
 	// Set your custom logger if needed. Default one is log.Printf
 	// Expected interface func(string, ...interface{})
@@ -33,18 +54,10 @@ func configureAPI(api *operations.BabyNamesAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.GetListIDHandler = operations.GetListIDHandlerFunc(func(params operations.GetListIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetListID has not yet been implemented")
-	})
-	api.PostListHandler = operations.PostListHandlerFunc(func(params operations.PostListParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PostList has not yet been implemented")
-	})
-	api.PutListIDAddBabyNameHandler = operations.PutListIDAddBabyNameHandlerFunc(func(params operations.PutListIDAddBabyNameParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutListIDAddBabyName has not yet been implemented")
-	})
-	api.PutListIDRemoveBabyNameHandler = operations.PutListIDRemoveBabyNameHandlerFunc(func(params operations.PutListIDRemoveBabyNameParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutListIDRemoveBabyName has not yet been implemented")
-	})
+	api.GetListIDHandler = operations.GetListIDHandlerFunc(listController.GetListIDHandlerFunc)
+	api.PostListHandler = operations.PostListHandlerFunc(listController.PostListHandlerFunc)
+	api.PutListIDAddBabyNameHandler = operations.PutListIDAddBabyNameHandlerFunc(listController.PutListIDAddBabyNameHandlerFunc)
+	api.PutListIDRemoveBabyNameHandler = operations.PutListIDRemoveBabyNameHandlerFunc(listController.PutListIDRemoveBabyNameHandlerFunc)
 
 	api.ServerShutdown = func() {}
 
