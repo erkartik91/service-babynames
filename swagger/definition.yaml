@@ -1,0 +1,122 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: '1.0.0'
+  title: 'Service Babynames'
+basePath: '/v1'
+schemes:
+- 'http'
+consumes:
+  - application/json
+produces:
+  - application/json
+
+definitions:
+  List:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      babyNames:
+        type: array
+        items:
+          type: string
+    required:
+      - id
+      - name
+      - babyNames
+  Error:
+    type: object
+    required:
+      - message
+    properties:
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
+paths:
+  /list:
+
+    post:
+      summary: 'Create new list'
+      parameters:
+      - name: name
+        type: string
+        in: query
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/List'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /list/{id}:
+    get:
+      summary: 'Get list by id'
+      parameters:
+      - name: id
+        type: string
+        in: path
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/List'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  /list/{id}/add-baby-name:
+    put:
+      summary: 'Add given name to list'
+      parameters:
+      - name: id
+        type: string
+        in: path
+        required: true
+      - name: babyNames
+        type: string
+        in: query
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/List'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  /list/{id}/remove-baby-name:
+    put:
+      summary: 'Remove given name from list'
+      parameters:
+      - name: id
+        type: string
+        in: path
+        required: true
+      - name: babyNames
+        type: string
+        in: query
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/List'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
