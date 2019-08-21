@@ -213,6 +213,12 @@
 			"revisionTime": "2018-05-11T14:21:26Z"
 		},
 		{
+			"checksumSHA1": "hev23KrSfQ4KfosxH+gJKziFVtA=",
+			"path": "github.com/rs/cors",
+			"revision": "76f58f330d76a55c5badc74f6212e8a15e742c77",
+			"revisionTime": "2019-01-16T17:59:10Z"
+		},
+		{
 			"checksumSHA1": "sbnl3lz7zitNewSzoRavr4UR/OE=",
 			"path": "github.com/thoas/go-funk",
 			"revision": "39652d7e0cc474383674a807331b8d4f05439fb8",
